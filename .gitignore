@@ -12,3 +12,5 @@ pkm_ai/
 pkmai/
 
 new_env_command
+
+*.egg-info.*
