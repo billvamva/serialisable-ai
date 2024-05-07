@@ -1,0 +1,5 @@
+setup.py
+pokeapi.egg-info/PKG-INFO
+pokeapi.egg-info/SOURCES.txt
+pokeapi.egg-info/dependency_links.txt
+pokeapi.egg-info/top_level.txt
