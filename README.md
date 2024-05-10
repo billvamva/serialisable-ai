@@ -1,6 +1,6 @@
-# PokeEmbedding
+# Serialisable Pokemon AI
 
-PokeEmbedding is a Python library designed for fetching and formatting Pokémon-related information from the Smogon API, as well as implementing a neural network from scratch for embedding Pokémon data.
+This is a collection of Python libraries designed for fetching and formatting Pokémon-related information from the Smogon API, as well as implementing a neural network from scratch for embedding Pokémon data.
 
 The goal of this project is to eventually use the pokemonembedding module to generate vectors for the strategy and store them in a vector database, which will be used with a LLM for strategy and information retrieval.
 
