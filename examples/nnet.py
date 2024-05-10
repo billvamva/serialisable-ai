@@ -66,11 +66,16 @@ def load_dataset(filename):
     X_max = np.max(X, axis=0)
     X_normalized = (X - X_min) / (X_max - X_min)
 
-    # Split the data into training and testing sets
-    X_train = X_normalized[:-300]
-    X_test = X_normalized[-300:]
-    y_train = y[:-300]
-    y_test = y[-300:]
+    # Shuffle the data
+    indices = np.random.permutation(len(X_normalized))
+    X_shuffled = X_normalized[indices]
+    y_shuffled = y[indices]
+
+    # Split the shuffled data into training and testing sets
+    X_train = X_shuffled[:-300]
+    X_test = X_shuffled[-300:]
+    y_train = y_shuffled[:-300]
+    y_test = y_shuffled[-300:]
 
     return X_train, X_test, y_train, y_test
 
@@ -84,9 +89,9 @@ def run():
         neural_network = NNet(input_size=input_size)
         neural_network.step = 3
         neural_network.batch_size = 10
-        neural_network.epochs = 10
+        neural_network.epochs = 3
         # Test the train method
-        neural_network.add_layer(20)
+        neural_network.add_layer(30)
         neural_network.add_layer(10)
         neural_network.add_layer(1)
         neural_network.summary()
@@ -104,10 +109,10 @@ def train(net, X_train, y_train):
                 for (features,output) in zip(X_train,y_train):
                         net.train(features, output)
                         # Monitor decreasing cost
-                        if net.training_count % 1000 == 0:
-                                print(f"train {net.training_count}  Cost {net.get_cost():.5f}")
+                        if net.training_count % 100 == 0:
+                                print(f"train {net.training_count}  Cost {net.cost:.5f}")
 
-                print(f"epoch {epoch}  Cost {net.get_cost():.5f}")
+                print(f"epoch {epoch}  Cost {net.cost:.5f}")
 
         # Calculate and log the total training time
         train_time = time.time() - start_time
@@ -132,7 +137,9 @@ def test(net, X_test, y_test, show:bool=True):
         print(f"Training step: {net.step} BatchSize: {net.batch_size}")
     print(f"success rate {(correct / X_test.shape[0]):.3f}")
     if show:
-        print(f"Avg Cost {net.get_cost():.5f}")
+        print(f"Avg Cost {net.cost:.5f}")
+    
+    print([node.bias for node in net.hidden_output_nodes])
 
 if __name__== "__main__":
         run()
