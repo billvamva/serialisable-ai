@@ -3,19 +3,22 @@ import numpy as np
 from random import random
 
 from pokeembedding.connection import Connection
+from pokeembedding.codec import Codec, Serializable
+from pokeembedding.class_codecs import NodeCodec
 
-class Node:
+class Node(Serializable):
         total_nodes:ClassVar[int] = 0
+        _codec: ClassVar[Codec] = NodeCodec
 
-        def __init__(self):
+        def __init__(self, bias: Optional[float] = random()):
                 self.id = Node.total_nodes
                 Node.total_nodes = self.id + 1
                 self.input_connections: List[Connection] = []
                 self.output_connections: List[Connection] = []
                 self.activate = Node.sig
                 self.activation_derivative = Node.sig_deriv
-                self.bias = random()
-                self.z = 1.0
+                self.bias = bias
+                self.z: float = None
                 self.value: float = None
                 self.expected:float = None
                 self.delta: float = None
@@ -36,6 +39,8 @@ class Node:
                 return binary_output
         
         def connect_layers(self, prev_nodes: List["Node"], weights: Optional[List[float]] = None):
+                """
+                """
                 if weights and len(prev_nodes) != len(weights):
                         raise Exception("Include all or no weights, will be randomly initialised.")
                 
@@ -49,6 +54,8 @@ class Node:
                 self.delta = None
         
         def feed_forward(self) -> None:
+                """
+                """
                 z  = self.bias
 
                 for conn in self.input_connections:
@@ -70,6 +77,8 @@ class Node:
                 return self.output_connections == []
         
         def get_delta(self):
+                """
+                """
                 if self.delta is None:
                         if self.is_output():
                                 # output neurons
@@ -83,6 +92,8 @@ class Node:
                 return self.delta
         
         def learn(self, batch_step:float)-> None:
+                """
+                """
                 if self.delta:
                         # adjust bias
                         self.bias -= batch_step * self.delta_sum
