@@ -1,0 +1,5 @@
+setup.py
+pokeembedding.egg-info/PKG-INFO
+pokeembedding.egg-info/SOURCES.txt
+pokeembedding.egg-info/dependency_links.txt
+pokeembedding.egg-info/top_level.txt

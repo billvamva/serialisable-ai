@@ -1,0 +1,16 @@
+# Python-specific
+*.pyc
+__pycache__/
+*.py[cod]
+.pytest_cache
+
+/save-files-dsv
+
+
+# Virtual Environment
+pkm_ai/
+pkmai/
+
+new_env_command
+
+*.egg-info.*
